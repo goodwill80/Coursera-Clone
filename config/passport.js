@@ -16,7 +16,28 @@ passport.deserializeUser(function(id, done){
   });
 });
 
-passport.use(new )
+//Middleware facebook login - find if facebook id is already store in session, if not create new user then store all facebook information into UserSchema fields. Then save all info via callback function.
+passport.use(new FacebookStratey(secret.facebook, function(req, token, refreshToken, profile, done){
+  User.findOne({ facebook: profile.id }, function(err, user){
+    if (err) return done(err);
+
+    if (user) {
+      return done(null, user);
+    } else {
+      var newUser = new User();
+      newUser.email = profile._json.email;
+      newUser.facebook = profile.id;
+      newUser.tokens.push({ kind: 'facebook', token: token});
+      newUser.profile.name = profile.displayName;
+      newUser.profile.picture = "http://graph.facebook.com/" + profile.id + "/picture?type=large";
+
+      newUser.save(function(err){
+        if (err) throw err;
+        return done(null, newUser);
+      });
+    }
+  });
+}));
 
 //signin
 //below we overwrite usernameField default with email
