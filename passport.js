@@ -8,7 +8,9 @@ passport.serializeUser(function(user, done){
 
 //fetch user ID from database. Whenever we type req.user
 passport.deserializeUser(function(id, done){
-  done(err, user);
+  User.findById(id, function(err, user){
+    done(err, user);
+  });
 });
 
 //signin
