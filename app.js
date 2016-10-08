@@ -3,8 +3,12 @@ var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 var ejs = require("ejs");
 var engine = require("ejs-mate");
+var cookieParser = require("cookieParser");
+var morgan = require("morgan");
+var session = require("session");
 var app = express();
 
+// Note: A cookie is send to the server, and the server will store the cookie in a session. Hence cookie is stored on the browser while session is stored on the server and it is usually associated with a given user. Session will be stored in MongoDB.
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +26,11 @@ app.set("view engine", "ejs");
 
 
 app.get("/", function(req, res, next) {
-  res.render("home");
+  res.render("home", {name: "Hello i'm jonathan"});
+});
+
+app.get("/about", function(req, res, next) {
+  res.render("about");
 });
 
 
