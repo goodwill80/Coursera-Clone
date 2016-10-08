@@ -1,7 +1,5 @@
 var express = require('express');
 var mongoose = require('mongoose');
-// var MongoStore = require("connect-mongo")(session);
-var passport = require("passport");
 var bodyParser = require("body-parser");
 var ejs = require("ejs");
 var engine = require("ejs-mate");
@@ -10,6 +8,8 @@ var cookieParser = require("cookie-parser");
 var morgan = require("morgan");
 var session = require("express-session");
 var secret = require("./config/secret");
+var MongoStore = require("connect-mongo")(session);
+var passport = require("passport");
 var app = express();
 
 //connecting express to routes
@@ -32,14 +32,14 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: secret.secretKey,
+  store: new MongoStore({ url: secret.database , autoReconnect: true })
+}));
 app.use(passport.initialize());
-app.use(passport.session);
-// app.use(session({
-//   resave: true,
-//   saveUninitialized: true,
-//   secret: "hello",
-//   store: new MongoStore({url: , autoReconnect: true})
-// }))
+app.use(passport.session());
 app.engine("ejs", engine);
 app.set("view engine", "ejs");
 

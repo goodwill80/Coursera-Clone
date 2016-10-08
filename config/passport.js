@@ -16,7 +16,7 @@ passport.deserializeUser(function(id, done){
   });
 });
 
-//Middleware facebook login - find if facebook id is already store in session, if not create new user then store all facebook information into UserSchema fields. Then save all info via callback function.
+//Middleware facebook login - find if facebook id is already store in mongoDB, if not then create new user then store all facebook information into UserSchema fields. Then save all info via callback function.
 passport.use(new FacebookStratey(secret.facebook, function(req, token, refreshToken, profile, done){
   User.findOne({ facebook: profile.id }, function(err, user){
     if (err) return done(err);
