@@ -22,7 +22,7 @@ app.set("view engine", "ejs");
 
 
 app.get("/", function(req, res, next) {
-  res.render();
+  res.render("home");
 });
 
 
