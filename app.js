@@ -21,7 +21,7 @@ mongoose.connect(secret.database, function(err){
   if(err) {
     console.log(err);
   } else {
-    console.log("connected to the database");
+    console.log("Database on!");
   }
 });
 

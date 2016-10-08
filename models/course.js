@@ -1,6 +1,7 @@
 var mongoose = require(mongoose);
+var Schema = mongoose.Schema;
 
-var CourseSchema = new mongoose.Schema({
+var CourseSchema = new Schema({
   title: String,
   desc: String,
   wistiaId: String,
