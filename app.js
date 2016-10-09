@@ -52,7 +52,7 @@ app.use(function(req, res, next){
 //connecting express to routes
 require("./routes/main")(app);
 require("./routes/user")(app);
-
+require("./routes/instructor")(app);
 
 //Server
 app.set('port', (process.env.PORT || secret.port));
