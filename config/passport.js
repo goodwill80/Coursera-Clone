@@ -2,6 +2,7 @@ var passport = require("passport");
 var FacebookStrategy = require('passport-facebook').Strategy;
 var secret = require("../config/secret");
 var User = require("../models/user");
+var flash = require("express-flash");
 // var LocalStrategy = require("passport-local");
 
 //store user ID in the session
@@ -23,6 +24,7 @@ passport.use(new FacebookStrategy(secret.facebook, function(req, token, refreshT
 
     if (user) {
       return done(null, user);
+      req.flash('loginMessage', 'Successfully login with your Facebook Account!');
     } else {
       var newUser = new User();
       newUser.email = profile._json.email;
@@ -33,6 +35,7 @@ passport.use(new FacebookStrategy(secret.facebook, function(req, token, refreshT
 
       newUser.save(function(err){
         if (err) throw err;
+        req.flash('loginMessage', 'Successfully login with your Facebook Account!');
         return done(null, newUser);
       });
     }

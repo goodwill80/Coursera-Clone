@@ -7,7 +7,8 @@ module.exports= {
     clientID: '1110061769115357',
     clientSecret: '5b26a9009b29dbe2b5e0c9d338ba9457',
     profileFields: ['emails', 'displayName'] ,
-    callbackURL: 'http://localhost:2000/auth/facebook/callback'
+    callbackURL: 'http://localhost:2000/auth/facebook/callback',
+    passReqToCallback: true
   }
 
 }
