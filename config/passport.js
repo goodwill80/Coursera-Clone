@@ -3,6 +3,9 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var secret = require("../config/secret");
 var User = require("../models/user");
 var flash = require("express-flash");
+var async = require('async');
+var request = require('request');
+
 // var LocalStrategy = require("passport-local");
 
 //store user ID in the session
@@ -26,18 +29,47 @@ passport.use(new FacebookStrategy(secret.facebook, function(req, token, refreshT
       return done(null, user);
       req.flash('loginMessage', 'Successfully login with your Facebook Account!');
     } else {
-      var newUser = new User();
-      newUser.email = profile._json.email;
-      newUser.facebook = profile.id;
-      newUser.tokens.push({ kind: 'facebook', token: token});
-      newUser.profile.name = profile.displayName;
-      newUser.profile.picture = "http://graph.facebook.com/" + profile.id + "/picture?type=large";
+      
+      async.waterfall([
+        function(callback){
+          var newUser = new User();
+          newUser.email = profile._json.email;
+          newUser.facebook = profile.id;
+          newUser.tokens.push({ kind: 'facebook', token: token});
+          newUser.profile.name = profile.displayName;
+          newUser.profile.picture = "http://graph.facebook.com/" + profile.id + "/picture?type=large";
 
-      newUser.save(function(err){
-        if (err) throw err;
-        req.flash('loginMessage', 'Successfully login with your Facebook Account!');
-        return done(null, newUser);
-      });
+          newUser.save(function(err){
+            if (err) throw err;
+            req.flash('loginMessage', 'Successfully login with your Facebook Account!');
+            callback(err, newUser)
+          });
+        },
+
+        function(newUser, callback){
+          //mailchimp request
+          request({
+            url: 'https://us14.api.mailchimp.com/3.0/lists/668aa965a0/members',
+            method: 'POST',
+            headers: {
+              'Authorization': 'randomUser 5dba8ef1c945ba4624f8f5b996e00e26-us14',
+              'Content-Type': 'application/json'
+            },
+            json: {
+              'email_address': newUser.email,
+              'status': 'subscribed'
+            }
+          }, function(err, response, body){
+            if (err) {
+              return done(err, newUser);
+            } else {
+              console.log("Successful!");
+              return done(null, newUser);
+            }
+          });
+        }
+      ]);
+
     }
   });
 }));
