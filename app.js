@@ -14,6 +14,7 @@ var app = express();
 
 //connecting express to routes
 require("./routes/main")(app);
+require("./routes/user")(app);
 
 // Note: A cookie is send to the server, and the server will store the cookie in a session. Hence cookie is stored on the browser while session is stored on the server and it is usually associated with a given user. Session will be stored in MongoDB. Connect-mongo is a library used to store session data into mongoDB. Before the cookie is created, we need to authenticate user 1st, hence, will need to include passport
 
