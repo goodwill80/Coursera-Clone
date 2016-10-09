@@ -26,14 +26,14 @@ module.exports = function(app) {
             foundUser.coursesTeach.push({ course: course._id});
             foundUser.save(function(err){
               if (err) return next(err);
-              res.redirect('/teacher/dashboard');
+              res.redirect('teacher/teacher-dashboard');
             });
           });
         }
       ]);
     });
 
-    app.get('teacher/dashboard', function(req, res, next) {
+    app.get('/teacher/teacher-dashboard', function(req, res, next) {
       User.findOne({_id: req.user._id})
       .populate("coursesTeach.course")
       .exec(function(err, foundUser){
