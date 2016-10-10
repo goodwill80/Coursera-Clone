@@ -1,0 +1,33 @@
+<% layout ("boilerplate") %>
+
+<div class="container">
+<div class="row">
+<div class="col-lg-6 col-md-offset-3">
+  <h1>Edit Course</h1>
+  <form role="form" method="post">
+
+    <div class="form-group">
+      <label for="name">Title</label>
+      <input type="text" class="form-control" name="title" placeholder="<%= course.title %>">
+    </div>
+
+    <div class="form-group">
+      <label for="name">Price</label>
+      <input type="text" class="form-control" name="price" placeholder="<%= course.price %>">
+    </div>
+
+    <div class="form-group">
+      <label for="name">Description</label>
+      <input type="text" class="form-control" name="desc" placeholder="<%= course.desc %>">
+    </div>
+
+    <div class="form-group">
+      <label for="name">Wistia ID:</label>
+      <input type="text" class="form-control" name="wistiaId" placeholder="<%= course.wistiaId %>">
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+</div>
+</div>

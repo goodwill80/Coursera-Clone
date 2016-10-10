@@ -75,13 +75,13 @@ module.exports = function(app) {
     app.route('/edit-course/:id')
 
     .get(function(req, res, next){
-      Course.find({ _id: req.params.id}, function(err, foundCourse){
-        res.render("teacher/edit-course", { course: foundCourse});
-      });
-    });
+      Course.findOne({ _id: req.params.id}, function(err, foundCourse){
+        res.render("teacher/edit-course", { course: foundCourse });
+      })
+    })
 
-    .post(function(res, res, next){
-      Course.find({ _id: req.params.id}, function(err, foundCourse){
+    .post(function(req, res, next){
+      Course.findOne({ _id: req.params.id }, function(err, foundCourse){
         if (foundCourse) {
           if (req.body.title) foundCourse.title = req.body.title;
           if (req.body.wistiaId) foundCourse.wistiaId = req.body.wistiaId;
@@ -90,7 +90,7 @@ module.exports = function(app) {
 
           foundCourse.save(function(err){
             if (err) return next(err);
-            res.redirect('teacher/dashboard');
+            res.redirect('/teacher/dashboard');
           })
         }
       });
