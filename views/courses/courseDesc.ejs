@@ -1,0 +1,40 @@
+<% layout ('boilerplate') %>
+
+<div class="jumbotron">
+    <div class="container">
+
+      <p><%= course.title %></p>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-lg-7">
+      <h1>Desciption</h1>
+      <%= course.desc %>
+    </div>
+
+    <div class="col-lg-5">
+      <h1>Enrolled Students</h1>
+      <div class="penal panel-default">
+        <div class="penel-heading">
+          Students
+        </div>
+        <div class="panel-body">
+          <% if (course.ownByStudent.length === 0) { %>
+            <p>0</p>
+            <% } else { %>
+              <% for( var i = 0; i < course.ownByStudent.length; i++) { %>
+                <div class="col-xs-2">
+                  <img src="<%= course.ownByStudent[i].user.profile.picture %>" />
+                </div>
+                  <% } %>
+                <% } %>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

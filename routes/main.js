@@ -22,7 +22,9 @@ module.exports = function(app) {
     async.parallel([
       //1st function
       function(callback) {
-        Course.findOne({ _id: req.params.id }, function(err, foundCourse){
+        Course.findOne( { _id: req.params.id} )
+        .populate('ownByStudent.user')
+        .exec(function(err, foundCourse){
           callback(err, foundCourse);
         });
       },
