@@ -96,6 +96,16 @@ module.exports = function(app) {
       });
     })
 
+    app.get('/revenue-report', function(req, res, next) {
+      var revenue = 0;
+      User.findOne({ _id: req.user._id}, function(err, foundUser){
+        foundUser.revenue.forEach(function(value){
+          revenue += value;
+        });
+        res.render('teacher/revenue-report', { revenue: revenue });
+      });
+    });
+
 
 
 }
