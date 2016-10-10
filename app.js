@@ -53,6 +53,7 @@ app.use(function(req, res, next){
 require("./routes/main")(app);
 require("./routes/user")(app);
 require("./routes/instructor")(app);
+require("./routes/payment")(app);
 
 //Server
 app.set('port', (process.env.PORT || secret.port));

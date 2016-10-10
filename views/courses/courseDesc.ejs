@@ -3,7 +3,23 @@
 <div class="jumbotron">
     <div class="container">
 
-      <p><%= course.title %></p>
+      <div class="row">
+        <div class="col-lg-6 col-md-offset3-">
+          <form action="/payment" method="POST">
+            <input type="hidden" name="courseId" value='<%= course._id %>' />
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key= "pk_test_4d4BncQFx1UVmBY3OAqmf7bD"
+              data-amount= "<%= course.price %>"
+              data-name= "Stripe.com"
+              data-description="Widget"
+              data-image= ""
+              data-locale="auto">
+
+            </script>
+          </form>
+        </div>
+      </div>
+
     </div>
   </div>
 

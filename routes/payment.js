@@ -8,7 +8,7 @@ module.exports = function(app) {
 
   app.post("/payment", function(req, res, next) {
 
-    var stripeToken = req.body.stripeToken; //get from stripe API via Ajax
+    var stripeToken = req.body.stripeToken; //get from stripe API
     var courseId = req.body, // to be stored in the input hidden field with name courseId
       courseId;
 
@@ -24,7 +24,7 @@ module.exports = function(app) {
         });
       },
       //create new stripe customer/charge and return values of payment with values from the course model i.e. price
-      function(callback) {
+      function(foundCourse, callback) {
         stripe.customers.create({
           source: stripeToken,
           email: req.user.email
