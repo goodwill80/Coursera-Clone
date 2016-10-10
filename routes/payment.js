@@ -57,7 +57,7 @@ module.exports = function(app) {
                   callback(err);
                 });
               },
-              //update user collection
+              //update user collection - students
               function(callback) {
                 User.update(
                   {
@@ -72,6 +72,7 @@ module.exports = function(app) {
                     callback(err);
                   });
               },
+                //update user collection - teachers
               function(callback) {
                 User.update(
                   {
@@ -84,6 +85,7 @@ module.exports = function(app) {
                     callback(err);
                   });
               }
+              //if all okay, direct to courses url
             ], function(err, results) {
               if (err) return next (err);
               res.redirect('/courses/' + courseId);
